@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\User;
+use App\Service\Slug;
 
 class UserObserver {
     /**
@@ -11,12 +12,17 @@ class UserObserver {
      * @param User $user
      * @return void
      */
-    public function created (User $user) {
-        $slug = str_slug($user->name) . '-' . $user->id;
+    public function creating(User $user) {
+        $user->slug = Slug::for($user)->generate($user->getFullName());
+    }
 
-        if (User::findBySlug($slug)->first() !== null)
-            throw new \Exception('Can not create a unique slug');
-            
-        $user->update([ 'slug' => $slug ]);
+    /**
+     * Observe user updating event.
+     * 
+     * @param User $user
+     * @return void
+     */
+    public function updating (User $user) {
+        $user->slug = Slug::for($user)->generate($user->getFullName());
     }
 }

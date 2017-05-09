@@ -17,7 +17,7 @@ class User extends Authenticatable {
      * @type array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'slug'
+        'first_name', 'last_name', 'email', 'password', 'slug'
     ];
 
     /**
@@ -26,9 +26,51 @@ class User extends Authenticatable {
      * @type array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
+
+    /**
+     * @param string $value
+     * @param string|int $uniqueIndex
+     * @return string
+     */
+    public static function generateSlug ($value, $uniqueIndex) {
+        return str_slug($value) . '-' . $uniqueIndex;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName () {
+        return $this->first_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName () {
+        return $this->last_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName () {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * @return boolean
+     */
+    public function updateSlug () {
+        $slug = self::generateSlug($this->getFullName(), $this->id);
+
+        if (self::findBySlug($slug)->where('id', '!=', $this->id)->exists())
+            throw new \Exception("Can't create a unique slug");
+
+        $this->slug = $slug;
+    }
 
     /**
      * Scope a query to find a user with the given slug.

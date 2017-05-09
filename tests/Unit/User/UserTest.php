@@ -17,4 +17,14 @@ class UserTest extends TestCase {
         $this->assertTrue($emma->is($emma));
         $this->assertFalse($emma->is($leon));
     }
+
+    /** @test */
+    public function it_can_get_full_name_of_the_user () {
+        $user = factory(User::class)->create([
+            'first_name' => 'John',
+            'last_name' => 'Doe'
+        ]);
+
+        $this->assertEquals('John Doe', $user->getFullName());
+    }
 }
