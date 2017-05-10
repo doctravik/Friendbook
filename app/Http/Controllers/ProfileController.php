@@ -14,7 +14,7 @@ class ProfileController extends Controller {
     public function index ($userSlug) {
         $user = User::findBySlug($userSlug)->firstOrFail();
         
-        $user->load(['followers', 'friendRequestsSent', 'friendRequestsReceived']);
+        $user->load(['followers']);
 
         return view('profile.index', compact('user'))->withFriends($user->friends());
     }

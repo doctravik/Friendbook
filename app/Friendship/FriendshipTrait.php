@@ -41,8 +41,16 @@ trait FriendshipTrait {
      * @param User $user
      * @return void
      */
-    public function cancelFriendship (User $user) {
-        $this->findFriendshipsWith($user)->delete();  
+    public function cancelAcceptedFriendship (User $user) {
+        $this->findFriendshipsWith($user)->where('status', Status::ACCEPTED)->delete();  
+    }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function cancelPendingFriendship (User $user) {
+        $this->findFriendshipsWith($user)->where('status', Status::PENDING)->delete();  
     }
 
     /**
@@ -61,6 +69,14 @@ trait FriendshipTrait {
      */
     public function findAcceptedFriendships () {
         return $this->findFriendships()->where('status', Status::ACCEPTED)->get();
+    }
+
+    /**
+     * @param User $user
+     * @return Friendship
+     */
+    public function selectFriendshipWith (User $user) {
+        return $this->findFriendshipsWith($user)->first();        
     }
 
     /**

@@ -22,7 +22,7 @@ class FriendshipTest extends TestCase {
     }
 
     /** @test */
-    public function user_can_reject_friend_request_of_the_another_user () {
+    public function user_can_reject_friend_request_from_the_another_user () {
         [ $john, $bobby ] = factory(User::class, 2)->create();
 
         $bobby->sendFriendRequestTo($john);
@@ -32,12 +32,32 @@ class FriendshipTest extends TestCase {
     }
 
     /** @test */
-    public function user_can_cancel_friendship_with_existing_friend () {
+    public function user_can_cancel_accepted_friendship_with_existing_friend () {
         [ $john, $bobby ] = factory(User::class, 2)->create();
 
         $bobby->sendFriendRequestTo($john);
         $john->acceptFriendRequest($bobby);
-        $john->cancelFriendship($bobby);
+        $john->cancelAcceptedFriendship($bobby);
+
+        $this->assertFalse($john->hasAnyFriendshipWith($bobby));
+    }
+
+    /** @test */
+    public function sender_can_cancel_pending_friendship () {
+        [ $john, $bobby ] = factory(User::class, 2)->create();
+
+        $bobby->sendFriendRequestTo($john);
+        $bobby->cancelPendingFriendship($john);
+
+        $this->assertFalse($john->hasAnyFriendshipWith($bobby));
+    }
+
+    /** @test */
+    public function recipient_can_cancel_pending_friendship () {
+        [ $john, $bobby ] = factory(User::class, 2)->create();
+
+        $bobby->sendFriendRequestTo($john);
+        $john->cancelPendingFriendship($bobby);
 
         $this->assertFalse($john->hasAnyFriendshipWith($bobby));
     }

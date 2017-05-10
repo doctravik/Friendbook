@@ -15,8 +15,8 @@ class RegisterUserTest extends TestCase {
     public function it_can_register_new_user () {
         $response = $this->post('/register', $this->fillDummyCredentials());
 
-        $response = $this->get('/home');
-        $response->assertSee('John');
+        $response->assertRedirect('/home');
+        $this->assertTrue(auth()->check());
         $this->assertDatabaseHas('users', ['email' => 'johndoe@example.com']);
     }
 

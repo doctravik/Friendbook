@@ -11,7 +11,7 @@ class FriendRequestController extends Controller {
      * @return void
      */
     public function __construct () {
-        $this->middleware('auth')->only('store');
+        $this->middleware('auth')->only('store', 'destroy');
     }
 
    /**
@@ -41,6 +41,7 @@ class FriendRequestController extends Controller {
 
         return view('friends.requests.index', compact('user', 'friendRequestsSent'));        
     }
+
     /**
      * Store friend request in db.
      * 
@@ -50,6 +51,18 @@ class FriendRequestController extends Controller {
     public function store (User $user) {
         auth()->user()->sendFriendRequestTo($user);
         auth()->user()->follow($user);
+
+        return response()->json([], 200);
+    }
+
+    /**
+     * Delete friend request in db.
+     * 
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy (User $user) {
+        auth()->user()->cancelPendingFriendship($user);
 
         return response()->json([], 200);
     }

@@ -12,26 +12,24 @@ class RejectFriendRequestTest extends TestCase {
     use DatabaseTransactions;
 
     /** @test */
-    public function unauthenticated_user_cannot_reject_friend_request() {
+    public function unauthenticated_user_cannot_reject_friend_request_from_another_user() {
         [$john, $bobby] = factory(User::class, 2)->create();
         $john->sendFriendRequestTo($bobby);
-        $bobby->acceptFriendRequest($john);
 
-        $response = $this->json('delete', '/friends/{$john->id}');
+        $response = $this->json('delete', '/friends/requests/{$john->id}');
 
         $response->assertStatus(401);
-        $this->assertTrue($john->isFriendWith($bobby));
+        $this->assertTrue($john->hasSentFriendRequestTo($bobby));
     }
 
     /** @test */
-    public function authenticated_user_can_reject_friend_request () {
+    public function authenticated_user_can_reject_friend_request_from_another_user () {
         [$john, $bobby] = factory(User::class, 2)->create();
         $john->sendFriendRequestTo($bobby);
-        $bobby->acceptFriendRequest($john);
 
-        $response = $this->actingAs($bobby)->json('delete', "/friends/{$john->id}");
+        $response = $this->actingAs($bobby)->json('delete', "/friends/requests/{$john->id}");
 
         $response->assertStatus(200);
-        $this->assertTrue($john->isFriendWith($bobby));
+        $this->assertFalse($john->hasSentFriendRequestTo($bobby));
     }
 }

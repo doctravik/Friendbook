@@ -31,12 +31,28 @@ trait FriendRequestTrait {
     }
 
     /**
+     * @param User $sender
+     * @return boolean
+     */
+    public function hasReceivedFriendRequestFrom (User $sender) {
+        return $this->friendRequestsReceived()->where('requester_id', $sender->id)->exists();
+    }
+
+    /**
      * @param User $recipient
      * @return void
      */
     public function sendFriendRequestTo (User $recipient) {
         if ($this->canBeFriendOf($recipient))
             $this->friendRequestsSent()->attach($recipient);
+    }
+
+    /**
+     * @param User $recipient
+     * @return void
+     */
+    public function cancelFriendRequestTo (User $recipient) {
+        $this->friendRequestsSent()->detach($recipient);
     }
 
     /**

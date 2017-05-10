@@ -46,7 +46,7 @@ class FriendController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy (User $user) {
-        auth()->user()->rejectFriendRequest($user);
+        auth()->user()->cancelAcceptedFriendship($user);
 
         return response()->json([], 200);     
     }
