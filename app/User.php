@@ -31,15 +31,6 @@ class User extends Authenticatable {
 
 
     /**
-     * @param string $value
-     * @param string|int $uniqueIndex
-     * @return string
-     */
-    public static function generateSlug ($value, $uniqueIndex) {
-        return str_slug($value) . '-' . $uniqueIndex;
-    }
-
-    /**
      * @return string
      */
     public function getFirstName () {
@@ -58,18 +49,6 @@ class User extends Authenticatable {
      */
     public function getFullName () {
         return "{$this->first_name} {$this->last_name}";
-    }
-
-    /**
-     * @return boolean
-     */
-    public function updateSlug () {
-        $slug = self::generateSlug($this->getFullName(), $this->id);
-
-        if (self::findBySlug($slug)->where('id', '!=', $this->id)->exists())
-            throw new \Exception("Can't create a unique slug");
-
-        $this->slug = $slug;
     }
 
     /**

@@ -56,6 +56,14 @@ trait FriendRequestTrait {
     }
 
     /**
+     * @param User $sender
+     * @return void
+     */
+    public function rejectFriendRequest (User $sender) {
+        $this->friendRequestsReceived()->detach($sender);
+    }
+
+    /**
      * @param User $user
      * @return boolean
      */
@@ -77,14 +85,6 @@ trait FriendRequestTrait {
     public function acceptFriendRequest (User $sender) {
         if ($this->hasFriendshipWith($sender, Status::PENDING))
             $this->addFriend($sender);
-    }
-
-    /**
-     * @param User $user
-     * @return void
-     */
-    public function rejectFriendRequest (User $user) {
-        $this->friendRequestsReceived()->detach($user);
     }
 
     /**

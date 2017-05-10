@@ -16,6 +16,9 @@ window.Vue = require('vue');
  */
 
 Vue.component('friend-buttons', require('./components/friend-buttons/FriendButtons.vue'));
+Vue.component('friend-requests-sent', require('./components/friend-request/Sent.vue'));
+Vue.component('friend-requests-received', require('./components/friend-request/Received.vue'));
+
 
 const app = new Vue({
     el: '#app'

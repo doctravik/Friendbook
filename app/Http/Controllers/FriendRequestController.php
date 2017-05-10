@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Transformers\UserTransformer;
 use App\Http\Requests\StoreFriendRequest;
 
 class FriendRequestController extends Controller {
@@ -11,35 +13,37 @@ class FriendRequestController extends Controller {
      * @return void
      */
     public function __construct () {
-        $this->middleware('auth')->only('store', 'destroy');
+        $this->middleware('auth');
     }
 
    /**
-     * Show received friend requests of the user.
+     * Select received friend requests of the user.
      * 
      * @param string $userSlug
      * @return \Illuminate\Http\Response
      */
-    public function indexRequestsReceived ($userSlug) {
-        $user = User::findBySlug($userSlug)->firstOrFail();
+    public function indexRequestsReceived () {
+        $requests = Auth::user()->friendRequestsReceived()->get();
 
-        $friendRequestsReceived = $user->friendRequestsReceived()->get();
-
-        return view('friends.requests.index', compact('user', 'friendRequestsReceived'));        
+        return fractal()
+            ->collection($requests)
+            ->transformWith(new UserTransformer)
+            ->toArray();
     }
 
    /**
-     * Show friend requests sent by the user.
+     * Select friend requests sent by the user.
      * 
      * @param string $userSlug
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function indexRequestsSent ($userSlug) {
-        $user = User::findBySlug($userSlug)->firstOrFail();
+    public function indexRequestsSent () {
+        $requests = Auth::user()->friendRequestsSent()->get();
 
-        $friendRequestsSent = $user->friendRequestsSent()->get();
-
-        return view('friends.requests.index', compact('user', 'friendRequestsSent'));        
+        return fractal()
+            ->collection($requests)
+            ->transformWith(new UserTransformer)
+            ->toArray();    
     }
 
     /**
