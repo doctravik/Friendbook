@@ -2,14 +2,22 @@
 @section('title', 'Profile')
 @section('content')
     <div class="container">
-        @if(Auth::check())
-            @include('profile.partials.friend-button')
-        @endif
+        <div class="jumbotron">
+            <h1>{{ $user->getFullName() }}</h1>
+
+            @if (Auth::check() && !Auth::user()->is($user))
+                <friend-buttons 
+                    :current-user="{{ Auth::user() }}"
+                    :profile-user-id="{{ $user->id }}"
+                    :friendship="{{ json_encode(Auth::user()->selectFriendshipWith($user)) }}">
+                </friend-buttons>
+            @endif
+        </div>
         
         <div class="row">
             <div class="col-md-4">
-                @include('profile.partials.friends')
-                @include('profile.partials.followers')
+                <friends :friends="{{ $friends }}" :friends-count="{{ $user->selectFriendsCount() }}"></friends> 
+                <followers :user="{{ $user }}"></followers> 
             </div>
             <div class="col-md-8">
                 @if(Auth::check() && Auth::user()->is($user))

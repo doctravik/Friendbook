@@ -33,7 +33,7 @@
              * @return void
              * @TODO error message
              */
-            selectRequestFromDb () {
+            selectRequestsFromDb () {
                 axios.get('/friends/requests/received')
                     .then(response => {
                         this.requests = response.data.data;
@@ -44,7 +44,6 @@
             },
 
             /**
-             * @TODO add friend to friend list
              * @TODO error message
              * @param object sender
              * @return void
@@ -53,8 +52,7 @@
                 axios.post('/friends/' + sender.id)
                     .then(response => {
                         this.removeRequest(sender);
-                        // Add friend to the friendlist
-                        // Increment count of friends
+                        eventDispatcher.$emit('add-friend', sender);
                     })
                     .catch(error => {
                         // 

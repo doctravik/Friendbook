@@ -34,7 +34,7 @@ trait FriendshipTrait {
     }
 
     public function selectFriendsCount () {
-        return $this->findAcceptedFriendships()->count();        
+        return $this->findAcceptedFriendships()->count();
     }
 
     /**
@@ -57,7 +57,7 @@ trait FriendshipTrait {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function friends () {
-        $friendships = $this->findAcceptedFriendships();
+        $friendships = $this->findAcceptedFriendships()->get();
         
         $friends = FriendsQueryBuilder::getFriendsFrom($friendships);
         
@@ -65,10 +65,10 @@ trait FriendshipTrait {
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function findAcceptedFriendships () {
-        return $this->findFriendships()->where('status', Status::ACCEPTED)->get();
+        return $this->findFriendships()->where('status', Status::ACCEPTED);
     }
 
     /**

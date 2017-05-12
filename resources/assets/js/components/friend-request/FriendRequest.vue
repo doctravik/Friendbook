@@ -8,7 +8,7 @@
          * @return void
          */
         mounted () {
-            this.selectRequestFromDb();
+            this.selectRequestsFromDb();
         },
 
         data () {
@@ -24,7 +24,7 @@
             /**
              * @return void
              */
-            selectRequestFromDb () {
+            selectRequestsFromDb () {
                 //
             },
 

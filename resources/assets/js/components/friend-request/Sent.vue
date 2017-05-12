@@ -32,7 +32,7 @@
              * @return void
              * @TODO error message
              */
-            selectRequestFromDb () {
+            selectRequestsFromDb () {
                 axios.get('/friends/requests/sent')
                     .then(response => {
                         this.requests = response.data.data;

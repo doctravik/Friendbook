@@ -1,6 +1,7 @@
 <template>
     <div>
         <add-button v-if="notFriend" @update-state="setState" 
+            :current-user="currentUser"
             :profile-user-id="profileUserId">
         </add-button>
 
@@ -35,9 +36,16 @@
     } from './../config';
     
     export default {
-        props: ['currentUserId', 'profileUserId', 'friendship'],
+        props: ['currentUser', 'profileUserId', 'friendship'],
 
         computed: {
+            /**
+             * @return boolean
+             */
+            currentUserId () {
+                return this.currentUser.id;
+            },
+
             /**
              * @return boolean
              */

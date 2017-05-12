@@ -12,10 +12,11 @@ class ProfileController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index ($userSlug) {
-        $user = User::findBySlug($userSlug)->firstOrFail();
+        $user = User::findBySlug($userSlug)->withCount('followers')->firstOrFail();
         
         $user->load(['followers']);
 
-        return view('profile.index', compact('user'))->withFriends($user->friends());
+        return view('profile.index', compact('user'))
+            ->withFriends($user->friends()->get());
     }
 }

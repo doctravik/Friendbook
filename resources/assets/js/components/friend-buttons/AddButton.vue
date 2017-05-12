@@ -6,7 +6,7 @@
     import { REQUEST_SENT_STATE as state } from './../config';
 
     export default {
-        props: ['profileUserId'],
+        props: ['profileUserId', 'currentUser'],
         
         data() {
             return {
@@ -22,6 +22,7 @@
                 axios.post('/friends/requests/' + this.profileUserId)
                     .then(response => {
                         this.$emit('update-state', state);
+                        eventDispatcher.$emit('add-follower', this.currentUser);
                     })
                     .catch(error => {
                         //

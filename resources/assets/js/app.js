@@ -9,12 +9,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+window.eventDispatcher = new Vue();
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('friends', require('./components/sidebar/Friends.vue'));
+Vue.component('followers', require('./components/sidebar/Followers.vue'));
 Vue.component('friend-buttons', require('./components/friend-buttons/FriendButtons.vue'));
 Vue.component('friend-requests-sent', require('./components/friend-request/Sent.vue'));
 Vue.component('friend-requests-received', require('./components/friend-request/Received.vue'));
