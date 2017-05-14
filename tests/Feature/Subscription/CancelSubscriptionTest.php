@@ -28,9 +28,6 @@ class CancelSubscriptionTest extends TestCase {
         $response = $this->actingAs($charles)->json('delete', "/unfollow/{$emma->id}");
 
         $response->assertStatus(200);
-        $this->assertDatabaseMissing('followers', [
-            'follower_id' => $charles->id,
-            'followed_id' => $emma->id
-        ]);
+        $this->assertFalse($charles->isFollowerOf($emma));
     }
 }
