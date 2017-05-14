@@ -16,8 +16,9 @@ window.eventDispatcher = new Vue();
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('friends', require('./components/sidebar/Friends.vue'));
-Vue.component('followers', require('./components/sidebar/Followers.vue'));
+Vue.component('friends-view', require('./components/views/Friends.vue'));
+Vue.component('friends-sidebar', require('./components/sidebar/Friends.vue'));
+Vue.component('followers-sidebar', require('./components/sidebar/Followers.vue'));
 Vue.component('friend-buttons', require('./components/friend-buttons/FriendButtons.vue'));
 Vue.component('friend-requests-sent', require('./components/friend-request/Sent.vue'));
 Vue.component('friend-requests-received', require('./components/friend-request/Received.vue'));

@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card__header">
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            <a class="card__title" :href="url"><strong v-text="title"></strong></a>
+            <a class="card__title" :href="'/' + url"><strong v-text="title"></strong></a>
             <span>&bullet;</span>
             <span class="card__count" v-text="count"></span>
         </div> 

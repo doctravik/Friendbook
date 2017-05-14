@@ -2,11 +2,11 @@
     import People from './People.vue';
 
     export default {
-        props: ['friends', 'friendsCount'],
+        props: ['user', 'friends', 'friendsCount'],
         
         data () {
             return {
-                url: '#',
+                url: this.user.slug + '/friends',
                 title: 'Friends',
                 users: this.friends,
                 count: this.friendsCount
