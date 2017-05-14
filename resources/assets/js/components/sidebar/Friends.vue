@@ -21,6 +21,10 @@
                 eventDispatcher.$on('add-friend', user => {
                     this.addUser(user);
                 });
+
+                eventDispatcher.$on('remove-friend', userId => {
+                    this.deleteUser(userId);
+                });
             }
         },
 

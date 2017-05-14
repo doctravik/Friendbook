@@ -34,7 +34,7 @@ class FriendController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function store (User $user) {
-        auth()->user()->acceptFriendRequest($user);
+        auth()->user()->beFriend($user);
 
         return response()->json([], 200);
     }
@@ -46,7 +46,7 @@ class FriendController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy (User $user) {
-        auth()->user()->cancelAcceptedFriendship($user);
+        auth()->user()->unfriend($user);
 
         return response()->json([], 200);     
     }

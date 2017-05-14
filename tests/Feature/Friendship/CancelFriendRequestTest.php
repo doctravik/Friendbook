@@ -14,29 +14,29 @@ class CancelFriendRequestTest extends TestCase {
     /** @test */
     public function unauthenticated_user_cannot_cancel_friend_request () {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
+        $john->invite($bobby);
 
         $response = $this->json('delete', "/friends/requests/{$bobby->id}");
 
         $response->assertStatus(401);
-        $this->assertTrue($john->hasSentFriendRequestTo($bobby));
+        $this->assertTrue($john->hasSentRequestTo($bobby));
     }
 
     /** @test */
     public function authenticated_user_can_cancel_friend_request_sent_to_another_user () {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
+        $john->invite($bobby);
 
         $response = $this->actingAs($john)->json('delete', "/friends/requests/{$bobby->id}");
 
         $response->assertStatus(200);
-        $this->assertFalse($john->hasSentFriendRequestTo($bobby));
+        $this->assertFalse($john->hasSentRequestTo($bobby));
     }
 
     /** @test */
     public function user_is_still_follower_after_cancel_request () {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
+        $john->invite($bobby);
         $john->follow($bobby);
 
         $response = $this->actingAs($john)->json('delete', "/friends/requests/{$bobby->id}");

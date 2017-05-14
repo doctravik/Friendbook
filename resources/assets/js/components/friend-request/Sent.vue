@@ -29,8 +29,8 @@
     export default {
         methods: {
             /**
-             * @return void
              * @TODO error message
+             * @return void
              */
             selectRequestsFromDb () {
                 axios.get('/friends/requests/sent')

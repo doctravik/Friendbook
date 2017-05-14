@@ -14,22 +14,22 @@ class RejectFriendRequestTest extends TestCase {
     /** @test */
     public function unauthenticated_user_cannot_reject_friend_request_from_another_user() {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
+        $john->invite($bobby);
 
         $response = $this->json('delete', '/friends/requests/{$john->id}');
 
         $response->assertStatus(401);
-        $this->assertTrue($john->hasSentFriendRequestTo($bobby));
+        $this->assertTrue($john->hasSentRequestTo($bobby));
     }
 
     /** @test */
     public function authenticated_user_can_reject_friend_request_from_another_user () {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
+        $john->invite($bobby);
 
         $response = $this->actingAs($bobby)->json('delete', "/friends/requests/{$john->id}");
 
         $response->assertStatus(200);
-        $this->assertFalse($john->hasSentFriendRequestTo($bobby));
+        $this->assertFalse($john->hasSentRequestTo($bobby));
     }
 }

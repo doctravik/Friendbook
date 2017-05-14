@@ -32,7 +32,7 @@ class SelectFriendRequestsTest extends TestCase {
     /** @test */
     public function authenticated_user_can_see_friend_requests_received_from_another_user () {
         [$emma, $leon] = factory(User::class, 2)->create();
-        $leon->sendFriendRequestTo($emma);
+        $leon->invite($emma);
 
         $response = $this->actingAs($emma)->json('get', '/friends/requests/received');
 
@@ -45,7 +45,7 @@ class SelectFriendRequestsTest extends TestCase {
     /** @test */
     public function authenticated_user_can_see_friend_requests_sent_to_another_user () {
         [$emma, $leon] = factory(User::class, 2)->create();
-        $leon->sendFriendRequestTo($emma);
+        $leon->invite($emma);
 
         $response = $this->actingAs($leon)->json('get', '/friends/requests/sent');
 

@@ -14,8 +14,8 @@ class RemoveFriendTest extends TestCase {
     /** @test */
     public function unauthenticated_user_cannot_remove_friend_from_friend_list() {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
-        $bobby->acceptFriendRequest($john);
+        $john->invite($bobby);
+        $bobby->beFriend($john);
 
         $response = $this->json('delete', '/friends/{$john->id}');
 
@@ -26,8 +26,8 @@ class RemoveFriendTest extends TestCase {
     /** @test */
     public function authenticated_user_can_remove_friend_from_friend_list () {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
-        $bobby->acceptFriendRequest($john);
+        $john->invite($bobby);
+        $bobby->beFriend($john);
 
         $response = $this->actingAs($bobby)->json('delete', "/friends/{$john->id}");
 

@@ -22,14 +22,11 @@ class CreateSubscriptionTest extends TestCase {
 
     /** @test */
     public function authenticated_user_can_follow_of_another_user () {
-        [$charles, $emma] = factory(User::class, 2)->create();
+        [$leon, $emma] = factory(User::class, 2)->create();
 
-        $response = $this->actingAs($charles)->json('post', "/follow/{$emma->id}");
+        $response = $this->actingAs($leon)->json('post', "/follow/{$emma->id}");
 
         $response->assertStatus(200);
-        $this->assertDatabaseHas('followers', [
-            'follower_id' => $charles->id,
-            'followed_id' => $emma->id
-        ]);
+        $this->assertTrue($leon->isFollowerOf($emma));
     }
 }

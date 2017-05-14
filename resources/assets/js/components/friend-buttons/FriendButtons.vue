@@ -5,11 +5,13 @@
             :profile-user-id="profileUserId">
         </add-button>
 
-        <remove-button v-if="isFriend" @update-state="setState" 
+        <remove-button v-if="isFriend" @update-state="setState"
+            :current-user="currentUser"
             :profile-user-id="profileUserId">
         </remove-button>
         
-        <incoming-button v-if="hasReceivedFriendRequest" @update-state="setState" 
+        <incoming-button v-if="hasReceivedFriendRequest" @update-state="setState"
+            :current-user="currentUser"
             :profile-user-id="profileUserId">
         </incoming-button>
         
@@ -20,23 +22,15 @@
 </template>
 
 <script>
-    import store from './../store';
-    import FriendshipParser from './../FriendshipParser';
-    
+    import store from './../store';    
+    import * as buttonState from './../config';
     import AddButton from './AddButton.vue';
     import RemoveButton from './RemoveButton.vue';
     import OutgoingButton from './OutgoingButton.vue';
     import IncomingButton from './IncomingButton.vue';
-
-    import { 
-        FRIEND_STATE,
-        NOT_FRIEND_STATE, 
-        REQUEST_SENT_STATE, 
-        REQUEST_RECEIVED_STATE,
-    } from './../config';
     
     export default {
-        props: ['currentUser', 'profileUserId', 'friendship'],
+        props: ['currentUser', 'profileUserId', 'friendButtonState'],
 
         computed: {
             /**
@@ -50,33 +44,29 @@
              * @return boolean
              */
             isFriend () {
-                return this.state == FRIEND_STATE;
+                return this.state == buttonState.FRIEND_STATE;
             },
 
             /**
              * @return boolean
              */
             hasSentFriendRequest () {
-                return this.state == REQUEST_SENT_STATE;
+                return this.state == buttonState.REQUEST_SENT_STATE;
             },
 
             /**
              * @return boolean
              */
             hasReceivedFriendRequest () {
-                return this.state == REQUEST_RECEIVED_STATE;
+                return this.state == buttonState.REQUEST_RECEIVED_STATE;
             },
 
             /**
              * @return boolean
              */
             notFriend () {
-                return this.state == NOT_FRIEND_STATE;
+                return this.state == buttonState.NOT_FRIEND_STATE;
             },
-        },
-
-        mounted () {
-            this.setState(this.defineCurrentState());
         },
 
         data () {
@@ -84,18 +74,11 @@
                 /**
                  * @type int
                  */
-                state: store.state.friendButton
+                state: this.friendButtonState
             }
         },
 
         methods: {
-            /**
-             * @return void
-             */
-            defineCurrentState () {
-                return FriendshipParser.apply(this.friendship, this.currentUserId);
-            },
-
             /**
              * @param void
              */

@@ -16,7 +16,7 @@
     import { NOT_FRIEND_STATE as notFriendState } from './../config';
 
     export default {
-        props: ['profileUserId'],
+        props: ['currentUser', 'profileUserId'],
 
         methods: {
             /**
@@ -26,6 +26,7 @@
                 axios.post('/friends/' + this.profileUserId)
                     .then(response => {
                         this.$emit('update-state', friendState);
+                        eventDispatcher.$emit('add-friend', this.currentUser);
                     })
                     .catch(error => {
                         //

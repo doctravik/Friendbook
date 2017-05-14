@@ -23,7 +23,7 @@ class FriendRequestController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function indexRequestsReceived () {
-        $requests = Auth::user()->friendRequestsReceived()->get();
+        $requests = Auth::user()->inviters()->get();
 
         return fractal()
             ->collection($requests)
@@ -38,7 +38,7 @@ class FriendRequestController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexRequestsSent () {
-        $requests = Auth::user()->friendRequestsSent()->get();
+        $requests = Auth::user()->invitedUsers()->get();
 
         return fractal()
             ->collection($requests)
@@ -53,7 +53,7 @@ class FriendRequestController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function store (User $user) {
-        auth()->user()->sendFriendRequestTo($user);
+        auth()->user()->invite($user);
         auth()->user()->follow($user);
 
         return response()->json([], 200);
@@ -66,7 +66,7 @@ class FriendRequestController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy (User $user) {
-        auth()->user()->cancelPendingFriendship($user);
+        auth()->user()->reject($user);
 
         return response()->json([], 200);
     }

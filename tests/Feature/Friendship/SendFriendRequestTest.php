@@ -27,7 +27,7 @@ class SendFriendRequestTest extends TestCase {
         $response = $this->actingAs($john)->json('post', "/friends/requests/{$bobby->id}");
 
         $response->assertStatus(200);
-        $this->assertTrue($john->hasSentFriendRequestTo($bobby));
+        $this->assertTrue($john->hasSentRequestTo($bobby));
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class SendFriendRequestTest extends TestCase {
         $response = $this->actingAs($john)->json('post', "/friends/requests/{$bobby->id}");
 
         $response->assertStatus(200);
-        $this->assertTrue($john->hasSentFriendRequestTo($bobby));
+        $this->assertTrue($john->hasSentRequestTo($bobby));
         $this->assertTrue($john->isFollowerOf($bobby));
     }
 }

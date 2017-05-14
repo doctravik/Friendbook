@@ -15,7 +15,7 @@ class AcceptFriendRequestTest extends TestCase {
     /** @test */
     public function unauthenticated_user_cannot_accept_friend_request () {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
+        $john->invite($bobby);
 
         $response = $this->json('post', '/friends/{$john->id}');
 
@@ -26,7 +26,7 @@ class AcceptFriendRequestTest extends TestCase {
     /** @test */
     public function authenticated_user_can_accept_friend_request () {
         [$john, $bobby] = factory(User::class, 2)->create();
-        $john->sendFriendRequestTo($bobby);
+        $john->invite($bobby);
 
         $response = $this->actingAs($bobby)->json('post', "/friends/{$john->id}");
 

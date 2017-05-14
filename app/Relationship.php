@@ -5,7 +5,7 @@ namespace App;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Friendship extends Model {
+class Relationship extends Model {
     /**
      * @type string
      */
@@ -19,7 +19,7 @@ class Friendship extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWhereSender ($query, $senderId) {
-        return $query->where('requester_id', $senderId);
+        return $query->where('sender_id', $senderId);
     }
 
     /**
@@ -30,7 +30,7 @@ class Friendship extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWhereRecipient ($query, $recipientId) {
-        return $query->where('requested_id', $recipientId);
+        return $query->where('recipient_id', $recipientId);
     }
 
     /**
@@ -61,7 +61,7 @@ class Friendship extends Model {
      */
     public function scopeOf ($query, User $user) {
         return $query->where(function ($query) use ($user) {
-            $query->where('requester_id', $user->id)->orWhere('requested_id', $user->id);
+            $query->where('sender_id', $user->id)->orWhere('recipient_id', $user->id);
         });   
     }
 }

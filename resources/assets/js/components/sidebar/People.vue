@@ -51,12 +51,21 @@
             },
 
             /**
-             * @param object partner
+             * @param int partnerId
              * @return void
              */
-            deleteUser (partner) {
-                this.users = this.users.filter(user => user.id != partner.id);
-                this.count--;
+            deleteUser (partnerId) {
+                this.users = this.users.filter(user => user.id != partnerId);
+                this.decrementCount();
+            },
+
+            /**
+             * @return void
+             */
+            decrementCount () {
+                if(this.count > 0) {
+                    this.count--;
+                }
             },
 
             /**

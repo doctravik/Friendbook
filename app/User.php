@@ -2,14 +2,12 @@
 
 namespace App;
 
-use App\Friendship\FriendshipTrait;
-use App\Friendship\FriendRequestTrait;
-use App\Subscription\SubscriptionTrait;
+use App\Relationship\Friendable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable {
-    use Notifiable, SubscriptionTrait, FriendshipTrait, FriendRequestTrait;
+    use Notifiable, Friendable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +15,7 @@ class User extends Authenticatable {
      * @type array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'slug', 'full_name'
+        'first_name', 'last_name', 'email', 'password', 'slug'
     ];
 
     /**
@@ -26,7 +24,7 @@ class User extends Authenticatable {
      * @type array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'password', 'remember_token', 'email'
     ];
 
 

@@ -27,7 +27,7 @@ class Slug {
     }
 
     /**
-     * @param string $title
+     * @param string $valueToSlug
      * @return string
      */
     public function generate($valueToSlug)

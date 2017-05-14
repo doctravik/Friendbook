@@ -9,7 +9,7 @@
                 <friend-buttons 
                     :current-user="{{ Auth::user() }}"
                     :profile-user-id="{{ $user->id }}"
-                    :friendship="{{ json_encode(Auth::user()->selectFriendshipWith($user)) }}">
+                    :friend-button-state="{{ Auth::user()->getFriendButtonStateFor($user) }}">
                 </friend-buttons>
             @endif
         </div>

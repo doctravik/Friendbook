@@ -27,7 +27,6 @@ Route::post('/friends/{user}', 'FriendController@store');
 Route::delete('/friends/{user}', 'FriendController@destroy');
 
 Route::get('/{user}/following', 'FollowingController@index');
-
 Route::get('/{user}/followers', 'FollowController@index');
 Route::post('/follow/{user}', 'FollowController@store');
 Route::delete('/unfollow/{user}', 'FollowController@destroy');

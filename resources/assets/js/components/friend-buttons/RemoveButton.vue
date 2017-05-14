@@ -6,7 +6,7 @@
     import { NOT_FRIEND_STATE as state } from './../config';
 
     export default {
-        props: ['profileUserId'],
+        props: ['profileUserId', 'currentUser'],
 
         methods: {
             /**
@@ -16,8 +16,10 @@
                 axios.delete('/friends/' + this.profileUserId)
                     .then(response => {
                         this.$emit('update-state', state);
+                        eventDispatcher.$emit('remove-friend', this.currentUser.id);
                     })
                     .catch(error => {
+                        //
                     });
             }
         }
