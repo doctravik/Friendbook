@@ -2454,8 +2454,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     methods: {
         /**
-         * @return void
          * @TODO error message
+         * @return void
          */
         selectRequestsFromDb: function selectRequestsFromDb() {
             var _this = this;
@@ -2527,8 +2527,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     methods: {
         /**
-         * @return void
          * @TODO error message
+         * @return void
          */
         selectRequestsFromDb: function selectRequestsFromDb() {
             var _this = this;
@@ -2556,14 +2556,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['user'],
+    props: ['followers', 'followersCount'],
 
     data: function data() {
         return {
             url: '#',
             title: 'Followers',
-            users: this.user.followers,
-            count: this.user.followers_count
+            users: this.followers,
+            count: this.followersCount
         };
     },
 

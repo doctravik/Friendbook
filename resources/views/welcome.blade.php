@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="jumbotron">
-            <h1>Welcome to Fakebook</h1>
+            <h1>Welcome to Friendbook</h1>
             <p><a class="btn btn-primary btn-lg" href="{{ url('/login') }}" role="button">Login</a></p>
         </div>
     </div>

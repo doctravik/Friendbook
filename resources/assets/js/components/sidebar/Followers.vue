@@ -2,14 +2,14 @@
     import People from './People.vue';
 
     export default {
-        props: ['user'],
+        props: ['followers', 'followersCount'],
         
         data () {
             return {
                 url: '#',
                 title: 'Followers',
-                users: this.user.followers,
-                count: this.user.followers_count
+                users: this.followers,
+                count: this.followersCount
             }
         },
 

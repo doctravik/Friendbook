@@ -15,7 +15,7 @@ class ShowWelcomePageTest extends TestCase {
     public function guest_can_see_welcome_page () {
         $response = $this->get('/');
 
-        $response->assertSee('Welcome to Fakebook');
+        $response->assertSee('Welcome to Friendbook');
     }
 
     /** @test */
@@ -25,6 +25,6 @@ class ShowWelcomePageTest extends TestCase {
         $response = $this->actingAs($user)->get('/');
 
         $response->assertRedirect('/home');
-        $response->assertDontSee('Welcome to Fakebook');
+        $response->assertDontSee('Welcome to Friendbook');
     }
 }

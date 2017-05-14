@@ -16,8 +16,12 @@
         
         <div class="row">
             <div class="col-md-4">
-                <friends :friends="{{ $friends }}" :friends-count="{{ $user->selectFriendsCount() }}"></friends> 
-                <followers :user="{{ $user }}"></followers> 
+                <friends :friends="{{ $friends }}" 
+                    :friends-count="{{ $user->selectFriendsCount() }}">
+                </friends> 
+                <followers :followers="{{ $followers }}"  
+                    :followers-count="{{ $user->selectFollowersCount() }}">
+                </followers> 
             </div>
             <div class="col-md-8">
                 @if(Auth::check() && Auth::user()->is($user))

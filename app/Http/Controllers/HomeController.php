@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller {
     /**
@@ -18,6 +19,11 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index () {
-        return view('profile.index');
+        $user = Auth::user();
+        
+        return view('profile.index', compact('user'))->with([
+            'friends' => $user->friends()->take(9)->get(),
+            'followers' => $user->followers()->take(9)->get()
+        ]);
     }
 }

@@ -13,10 +13,10 @@ class ProfileController extends Controller {
      */
     public function index ($userSlug) {
         $user = User::findBySlug($userSlug)->withCount('followers')->firstOrFail();
-        
-        $user->load(['followers']);
 
-        return view('profile.index', compact('user'))
-            ->withFriends($user->friends()->get());
+        return view('profile.index', compact('user'))->with([
+            'friends' => $user->friends()->take(9)->get(),
+            'followers' => $user->followers()->take(9)->get()
+        ]);
     }
 }
