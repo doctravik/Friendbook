@@ -45,7 +45,7 @@ class Slug {
      * @return \Illuminate\Database\Eloquent\Collection
      */
     private function selectLatestSlugs ($slug) {
-        return $this->model->where('slug', 'rlike', "^{$slug}(-[0-9]*)?$")
+        return $this->model->where('slug', '~', "^{$slug}(-[0-9]*)?$")
             ->where('id', '<>', $this->model->id)
             ->latest('id')
             ->pluck('slug');
